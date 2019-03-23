@@ -1,0 +1,114 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+var arr=[];
+var array=[];
+var finalarr=[];
+var mularr = [],
+    cols = 10;
+for(var i=0;i<90;i++)
+{
+arr.push(i+1);
+array.push(i+1);
+}
+$('body').on('click','#submit',function(){
+for ( var i = 0; i < cols; i++ ) {
+    mularr[i] = []; 
+}
+
+var n=arr[Math.floor(Math.random()*arr.length)];
+if(finalarr.length < 90)
+{
+var audio = new Audio();
+var test = n.toString();
+audio.src ='https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q='+test+'&tl=en&total=1&idx=0&'+test.length;
+audio.play();
+finalarr.push(n);
+var index = arr.indexOf(n);
+if (index > -1) {
+  arr.splice(index, 1);
+  
+}
+var index1 = array.indexOf(n);
+if (index1 > -1) {
+  array[index1]=array[index1].toString()+"*"; 
+}
+}
+else{
+var audio = new Audio();
+audio.src ='https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=game%20over&tl=en&total=1&idx=0&textlen=9';
+audio.play();
+}
+var j=0;
+for(i=0;i<90;i++)
+{
+	var k;
+	if((i/10) % 1 != 0)
+		k= Math.floor(i/10);
+	else
+	    k=Math.floor((i+1)/10);
+	if(j>=10)
+	{
+		j=0;
+	}
+	  mularr[k][j]=array[i].toString();
+	  j++;
+}
+drawboard(mularr,10);
+});
+
+function drawboard(arr,n)
+{
+$('.table').empty();
+for(j=0;j<n-1;j++)
+{
+ var rowid='row'+j;
+  $('.table').append("<div class="+rowid+"></div>");
+for(i=0;i<n;i++)
+{
+ if(arr[j][i].indexOf("*")>-1)
+ {
+	$('.table .'+rowid).append("<div class='filled'><span>"+arr[j][i]+"</span></div>");
+ }
+ else
+ {
+ $('.table .'+rowid).append("<div class='empty'><span>"+arr[j][i]+"</span></div>");
+ }
+}
+}
+}
+
+});
+</script>
+<style type="text/css">
+.filled{
+width:30px;
+height:30px;
+background-color:red;
+color:red;
+padding-right:10px;
+border:2px solid white;
+display:inline-block;
+}
+.empty{
+width:30px;
+height:30px;
+background-color:green;
+color:green;
+padding-right:10px;
+border:2px solid white;
+display:inline-block;
+}
+div span{
+color:black;
+}
+</style>
+</head>
+<body>
+<button type="button" id="submit">Click Me!</button>
+<div class="table">
+</div>
+</body>
+</html>
